@@ -101,17 +101,3 @@ char	*ft_check(char *s)
 	}
 	return (NULL);
 }
-
-// int	ft_check(char *s)
-// {
-// 	int	i;
-//
-// 	i = 0;
-// 	while (s[i])
-// 	{
-// 		if (s[i] == '\n')
-// 			return (1);
-// 		i++;
-// 	}
-// 	return (0);
-// }

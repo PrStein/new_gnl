@@ -31,6 +31,8 @@ static char	*find_return(char **str)
 	*str = tmp;
 	if (*str == NULL)
 	{
+		if(s1)
+			free(s1);
 		free(*str);
 		return (NULL);
 	}
@@ -62,17 +64,20 @@ static int	find_line(int fd, char **line, char **buf)
 
 char	*get_next_line(int fd)
 {
-	char	*buf;
+	char	*buf[BUFFER_SIZE + 1];
 	int	i;
 	static char	*str;
 
 	if (fd < 0 || BUFFER_SIZE < 1 || read(fd, "", 0) == -1)
 		return (NULL);
-	buf = malloc(sizeof(char) * (BUFFER_SIZE + 1));//!!!!!!!!!!!!!!!!!!!!!
+	buf = malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!buf)
 		return (NULL);
 	i = find_line(fd, &str, &buf);
 	if (i < 0)
+	{
+		free(str);
 		return (NULL);
+	}
 	return (find_return(&str));
 }
