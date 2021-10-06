@@ -88,14 +88,14 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	return (str);
 }
 
-char	*ft_check(char *s)
+char	*ft_check(char *s, char c)
 {
 	int	i;
 
 	i = 0;
 	while (s[i])
 	{
-		if (s[i] == '\n')
+		if (s[i] == c)
 			return ((char *)&s[i]);
 		i++;
 	}

@@ -21,10 +21,19 @@ static char	*find_return(char **str)
 	i = 0;
 	while ((*str)[i] != '\n' && (*str)[i] != '\0')
 		i++;
-	s1 = ft_substr(*str, 0, i);
+	// if ((*str)[i] != '\n')
+	s1 = ft_substr(*str, 0, i + 1);
+	// else if ((*str)[i] != '\0')
+	// 	s1 = ft_substr(*str, 0, i);
 
 	if ((*str)[i] == '\n')
 		tmp = ft_strdup(&(*str)[i + 1]);
+	// else if ((*str)[i] == '\0')
+	// {
+	// 	free(*str);
+	// 	free(s1);
+	// 	return (NULL);
+	// }
 	else
 		tmp = NULL;
 	free(*str);
@@ -55,7 +64,7 @@ static int	find_line(int fd, char **line, char **buf)
 			str = ft_strjoin(*line, *buf);
 		free(*line);
 		*line = str;
-		if (ft_check (*line))
+		if (ft_check (*line, '\n') || ft_check (*line, '\0'))
 			break ;
 	}
 	free (*buf);
@@ -64,20 +73,20 @@ static int	find_line(int fd, char **line, char **buf)
 
 char	*get_next_line(int fd)
 {
-	char	*buf[BUFFER_SIZE + 1];
+	char	*buf/*[BUFFER_SIZE + 1]*/;
 	int	i;
 	static char	*str;
 
-	if (fd < 0 || BUFFER_SIZE < 1 || read(fd, "", 0) == -1)
+	if (fd < 1 || BUFFER_SIZE < 1 || read(fd, "", 0) == -1)
 		return (NULL);
 	buf = malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!buf)
 		return (NULL);
 	i = find_line(fd, &str, &buf);
-	if (i < 0)
-	{
-		free(str);
-		return (NULL);
-	}
+	// if (i < 0)
+	// {
+	// 	free(str);
+	// 	return (NULL);
+	// }
 	return (find_return(&str));
 }
