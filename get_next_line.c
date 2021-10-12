@@ -34,14 +34,9 @@ void    find_line(int fd, char **str, char **buf)
     {
         i = read(fd, *buf, BUFFER_SIZE);
         (*buf)[i] = '\0';
-        if (!*str || !**str)
-            *str = ft_strdup(*buf);
-        else
-        {
-            tmp = ft_strjoin(*str, *buf);
-            free(*str);
-            *str = tmp;
-        }
+    	tmp = ft_strjoin(*str, *buf);
+        free(*str);
+        *str = tmp;
         if (ft_check (*str, '\n'))
             break ;
     }
@@ -53,7 +48,7 @@ char    *get_next_line(int fd)
     char    *buf/*[BUFFER_SIZE + 1]*/;
     static char    *str;
 
-    if (fd < 1 || BUFFER_SIZE < 1 || read(fd, "", 0) == -1)
+    if (fd < 0 || BUFFER_SIZE < 1 || read(fd, "", 0) == -1)
         return (NULL);
     buf = malloc(sizeof(char) * (BUFFER_SIZE + 1));
     if (!buf)
